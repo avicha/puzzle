@@ -17,7 +17,7 @@ export default class Scene1 extends Scene {
         this.columns = 3
         this.rows = 3
         this.total = this.rows * this.columns - 1
-        this.steps = 10
+        this.steps = 30
         this.prev = null
         this.ceil_doms = []
         this.elapsed_time = 0
@@ -69,7 +69,7 @@ export default class Scene1 extends Scene {
                 return ceil.row != this.prev.row && ceil.column != this.prev.column
             })
         }
-        let max_score = Number.MIN_VALUE
+        let max_score = this.getScore(this.chessboard)
         let choose_ceils = []
         ceils.forEach(ceil => {
             let tmp = this.chessboard[ceil.row][ceil.column]
@@ -86,7 +86,15 @@ export default class Scene1 extends Scene {
             this.chessboard[this.currentRow][this.currentColumn] = this.chessboard[ceil.row][ceil.column]
             this.chessboard[ceil.row][ceil.column] = tmp
         })
-        let choose_ceil = choose_ceils[Math.floor(Math.random() * choose_ceils.length)]
+        let choose_ceil
+        if (choose_ceils.length) {
+            choose_ceil = choose_ceils[Math.floor(Math.random() * choose_ceils.length)]
+        } else {
+            choose_ceil = {
+                row: this.prev.row,
+                column: this.prev.column
+            }
+        }
         let tmp = this.chessboard[choose_ceil.row][choose_ceil.column]
         this.chessboard[choose_ceil.row][choose_ceil.column] = this.chessboard[this.currentRow][this.currentColumn]
         this.chessboard[this.currentRow][this.currentColumn] = tmp
@@ -124,6 +132,7 @@ export default class Scene1 extends Scene {
             }
             console.log(row_arr.toString())
         }
+        console.log(`score:${this.getScore(this.chessboard)}`)
     }
     render_chess_board() {
         this.pieceBorderWidth = 2
