@@ -135,20 +135,19 @@ export default class Scene1 extends Scene {
         console.log(`score:${this.getScore(this.chessboard)}`)
     }
     render_chess_board() {
-        this.pieceBorderWidth = 2
         this.pieceBgBorderWidth = 4
-        this.pieceWidth = resources.clock_piece.sizeWidth + 2 * this.pieceBorderWidth
-        this.pieceHeight = resources.clock_piece.sizeHeight + 2 * this.pieceBorderWidth
-        this.piecesBgWidth = this.columns * this.pieceWidth + 2 * this.pieceBgBorderWidth
-        this.piecesBgHeight = this.rows * this.pieceHeight + 2 * this.pieceBgBorderWidth
+        this.pieceWidth = resources.clock_piece.sizeWidth
+        this.pieceHeight = resources.clock_piece.sizeHeight
+        this.piecesBgWidth = this.columns * this.pieceWidth + this.pieceBgBorderWidth
+        this.piecesBgHeight = this.rows * this.pieceHeight + this.pieceBgBorderWidth
         this.piecesBgPosX = this.game.renderStageZone.pivot.x + (this.game.renderStageZone.width / 2 - this.piecesBgWidth) / 2
         this.piecesBgPosY = this.game.renderStageZone.top + (this.game.renderStageZone.height - this.piecesBgHeight) / 2
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                let pos_x = this.game.renderStageZone.pivot.x + (this.game.renderStageZone.width / 2 - this.columns * this.pieceWidth) / 2 + j * this.pieceWidth + this.pieceBorderWidth
-                let pos_y = this.game.renderStageZone.top + (this.game.renderStageZone.height - this.rows * this.pieceHeight) / 2 + i * this.pieceHeight + this.pieceBorderWidth
+                let pos_x = this.piecesBgPosX + this.pieceBgBorderWidth / 2 + j * this.pieceWidth
+                let pos_y = this.piecesBgPosY + this.pieceBgBorderWidth / 2 + i * this.pieceHeight
                 let tile = this.chessboard[i][j]
-                let drawingPiece = this.addGameObject(new DrawingPiece(pos_x, pos_y, 1, { tile: tile, visiable: tile == this.total ? false : true, borderWidth: this.pieceBorderWidth }))
+                let drawingPiece = this.addGameObject(new DrawingPiece(pos_x, pos_y, 1, { tile: tile, visiable: tile == this.total ? false : true }))
                 this.ceil_doms[tile] = drawingPiece
             }
         }
@@ -218,6 +217,9 @@ export default class Scene1 extends Scene {
                 Adapter.alert({ title: '挑战成功', content: `你花了${elapsed_time_text}秒完成了数字华容道的挑战!` })
             }, 2000)
         }
+    }
+    update(dt) {
+        super.update(dt)
     }
     draw(ctx) {
         super.draw(ctx)
