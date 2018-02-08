@@ -1,23 +1,25 @@
-import Scene from '../../prime/scene'
+import BaseScene from './base'
 import Sprite from '../../prime/sprite'
 import Text from '../../prime/ui/text'
 import resources from '../resources'
 import DrawingPiece from '../sprites/drawing_piece'
 import Adapter from '../adapter'
 
-export default class Scene1 extends Scene {
+export default class Scene1 extends BaseScene {
     static getResources() {
         return [resources.clock, resources.clock_piece]
     }
     constructor(game) {
-        super()
-        this.game = game
+        super(game)
+        this.enter(() => {
+            this.begin()
+        })
         game.opts.stageColor = '#8fd5d5'
         this.chessboard = []
-        this.columns = 3
-        this.rows = 3
+        this.columns = 4
+        this.rows = 4
         this.total = this.rows * this.columns - 1
-        this.steps = 30
+        this.steps = 100
         this.prev = null
         this.ceil_doms = []
         this.elapsed_time = 0
@@ -69,7 +71,7 @@ export default class Scene1 extends Scene {
                 return ceil.row != this.prev.row && ceil.column != this.prev.column
             })
         }
-        let max_score = this.getScore(this.chessboard)
+        let max_score = Number.MIN_VALUE
         let choose_ceils = []
         ceils.forEach(ceil => {
             let tmp = this.chessboard[ceil.row][ceil.column]
@@ -104,6 +106,64 @@ export default class Scene1 extends Scene {
         }
         this.currentRow = choose_ceil.row
         this.currentColumn = choose_ceil.column
+    }
+    move_ceil(direction) {
+        if (!this.is_game_over) {
+            switch (direction) {
+                case 'up':
+                    if (this.currentRow < this.rows - 1) {
+                        let tmp = this.chessboard[this.currentRow + 1][this.currentColumn]
+                        this.chessboard[this.currentRow + 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
+                        this.chessboard[this.currentRow][this.currentColumn] = tmp
+                        this.currentRow++
+                            this.ceil_doms[this.total].position.y += this.pieceHeight
+                        let ceil_dom = this.ceil_doms[tmp]
+                        ceil_dom.position.y -= this.pieceHeight
+                    }
+                    break
+                case 'right':
+                    if (this.currentColumn) {
+                        let tmp = this.chessboard[this.currentRow][this.currentColumn - 1]
+                        this.chessboard[this.currentRow][this.currentColumn - 1] = this.chessboard[this.currentRow][this.currentColumn]
+                        this.chessboard[this.currentRow][this.currentColumn] = tmp
+                        this.currentColumn--
+                            this.ceil_doms[this.total].position.x -= this.pieceWidth
+                        let ceil_dom = this.ceil_doms[tmp]
+                        ceil_dom.position.x += this.pieceWidth
+                    }
+                    break
+                case 'down':
+                    if (this.currentRow) {
+                        let tmp = this.chessboard[this.currentRow - 1][this.currentColumn]
+                        this.chessboard[this.currentRow - 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
+                        this.chessboard[this.currentRow][this.currentColumn] = tmp
+                        this.currentRow--
+                            this.ceil_doms[this.total].position.y -= this.pieceHeight
+                        let ceil_dom = this.ceil_doms[tmp]
+                        ceil_dom.position.y += this.pieceHeight
+                    }
+                    break
+                case 'left':
+                    if (this.currentColumn < this.columns - 1) {
+                        let tmp = this.chessboard[this.currentRow][this.currentColumn + 1]
+                        this.chessboard[this.currentRow][this.currentColumn + 1] = this.chessboard[this.currentRow][this.currentColumn]
+                        this.chessboard[this.currentRow][this.currentColumn] = tmp
+                        this.currentColumn++
+                            this.ceil_doms[this.total].position.x += this.pieceWidth
+                        let ceil_dom = this.ceil_doms[tmp]
+                        ceil_dom.position.x -= this.pieceWidth
+                    }
+                    break
+            }
+            if (!this.getScore()) {
+                this.is_game_over = true
+                Adapter.clearInterval(this.tick)
+                Adapter.setTimeout(() => {
+                    let elapsed_time_text = this.elapsed_time.toFixed(0)
+                    Adapter.alert({ title: '挑战成功', content: `你花了${elapsed_time_text}秒完成了数字华容道的挑战!` })
+                }, 2000)
+            }
+        }
     }
     init_chess_board() {
         for (let i = 0; i < this.rows; i++) {
@@ -147,7 +207,7 @@ export default class Scene1 extends Scene {
                 let pos_x = this.piecesBgPosX + this.pieceBgBorderWidth / 2 + j * this.pieceWidth
                 let pos_y = this.piecesBgPosY + this.pieceBgBorderWidth / 2 + i * this.pieceHeight
                 let tile = this.chessboard[i][j]
-                let drawingPiece = this.addGameObject(new DrawingPiece(pos_x, pos_y, 1, { tile: tile, visiable: tile == this.total ? false : true }))
+                let drawingPiece = this.addGameObject(new DrawingPiece(pos_x, pos_y, 1, { texture: resources.clock_piece, tile: tile, visiable: tile == this.total ? false : true }))
                 this.ceil_doms[tile] = drawingPiece
             }
         }
@@ -156,73 +216,19 @@ export default class Scene1 extends Scene {
         this.init_chess_board()
         this.print_chess_board()
         this.render_chess_board()
-        this.time_dom = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: this.elapsed_time.toFixed(2), fontSize: 28, lineHeight: 50, fontColor: '#f5ead6', align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
+        this.time_dom = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: `Time: ${this.elapsed_time.toFixed(0)}`, fontSize: 28, lineHeight: 50, fontColor: '#f5ead6', align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
+
+    }
+    begin() {
         this.tick = Adapter.setInterval(() => {
             this.elapsed_time += 0.1
-            this.time_dom.setText(this.elapsed_time.toFixed(2))
+            this.time_dom.setText(`Time: ${this.elapsed_time.toFixed(0)}`)
         }, 100)
-    }
-    move_ceil(direction) {
-        switch (direction) {
-            case 'up':
-                if (this.currentRow < this.rows - 1) {
-                    let tmp = this.chessboard[this.currentRow + 1][this.currentColumn]
-                    this.chessboard[this.currentRow + 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
-                    this.chessboard[this.currentRow][this.currentColumn] = tmp
-                    this.currentRow++
-                        this.ceil_doms[this.total].position.y += this.pieceHeight
-                    let ceil_dom = this.ceil_doms[tmp]
-                    ceil_dom.position.y -= this.pieceHeight
-                }
-                break
-            case 'right':
-                if (this.currentColumn) {
-                    let tmp = this.chessboard[this.currentRow][this.currentColumn - 1]
-                    this.chessboard[this.currentRow][this.currentColumn - 1] = this.chessboard[this.currentRow][this.currentColumn]
-                    this.chessboard[this.currentRow][this.currentColumn] = tmp
-                    this.currentColumn--
-                        this.ceil_doms[this.total].position.x -= this.pieceWidth
-                    let ceil_dom = this.ceil_doms[tmp]
-                    ceil_dom.position.x += this.pieceWidth
-                }
-                break
-            case 'down':
-                if (this.currentRow) {
-                    let tmp = this.chessboard[this.currentRow - 1][this.currentColumn]
-                    this.chessboard[this.currentRow - 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
-                    this.chessboard[this.currentRow][this.currentColumn] = tmp
-                    this.currentRow--
-                        this.ceil_doms[this.total].position.y -= this.pieceHeight
-                    let ceil_dom = this.ceil_doms[tmp]
-                    ceil_dom.position.y += this.pieceHeight
-                }
-                break
-            case 'left':
-                if (this.currentColumn < this.columns - 1) {
-                    let tmp = this.chessboard[this.currentRow][this.currentColumn + 1]
-                    this.chessboard[this.currentRow][this.currentColumn + 1] = this.chessboard[this.currentRow][this.currentColumn]
-                    this.chessboard[this.currentRow][this.currentColumn] = tmp
-                    this.currentColumn++
-                        this.ceil_doms[this.total].position.x += this.pieceWidth
-                    let ceil_dom = this.ceil_doms[tmp]
-                    ceil_dom.position.x -= this.pieceWidth
-                }
-                break
-        }
-        if (!this.getScore()) {
-            this.is_game_over = true
-            Adapter.clearInterval(this.tick)
-            Adapter.setTimeout(() => {
-                let elapsed_time_text = this.elapsed_time.toFixed(2)
-                Adapter.alert({ title: '挑战成功', content: `你花了${elapsed_time_text}秒完成了数字华容道的挑战!` })
-            }, 2000)
-        }
     }
     update(dt) {
         super.update(dt)
     }
     draw(ctx) {
-        super.draw(ctx)
         ctx.beginPath()
         ctx.strokeStyle = '#70777f'
         ctx.lineWidth = 4
@@ -232,5 +238,6 @@ export default class Scene1 extends Scene {
         ctx.strokeStyle = '#f5ead6'
         ctx.lineWidth = this.pieceBgBorderWidth
         ctx.strokeRect(this.piecesBgPosX, this.piecesBgPosY, this.piecesBgWidth, this.piecesBgHeight)
+        super.draw(ctx)
     }
 }
