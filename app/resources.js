@@ -9,6 +9,7 @@ export default {
     clock_thumb: new Texture('res/textures/clock_thumb.png', 1, 1, 240, 240),
     clock: new Texture('res/textures/clock.png', 1, 1, 480, 480),
     clock_piece: new Texture('res/textures/clock.png', 3, 3, 120, 120),
+    bird_thumb: new Texture('res/textures/bird_thumb.png', 1, 1, 240, 240),
     bird: new Texture('res/textures/bird.png', 1, 1, 480, 480),
     bird_piece: new Texture('res/textures/bird.png', 3, 3, 120, 120)
 }

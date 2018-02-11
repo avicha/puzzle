@@ -21,7 +21,7 @@ export default class Stage1 extends BaseScene {
         this.steps = steps
         this.nextScene = nextScene
         game.opts.stageColor = '#8fd5d5'
-        this.menu = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
+        this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
         this.drawing = this.addGameObject(new Sprite(game.renderStageZone.left + game.renderStageZone.width / 4 - this.drawingTexture.sizeWidth / 2, game.renderStageZone.bottom - this.drawingTexture.sizeHeight - 100, 1, { texture: this.drawingTexture }))
         this.timeDom = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: `时 间  0`, fontSize: 28, lineHeight: 28, fontColor: '#8fd5d5', align: Button.ALIGN.CENTER, valign: Button.VALIGN.TOP, width: 240, height: 68, borderColor: '#fafafa', borderWidth: 4, isFilled: true }))
         this.initGame()
@@ -251,6 +251,13 @@ export default class Stage1 extends BaseScene {
         this.printChessBoard()
         this.renderChessBoard()
         this.clock = new Clock()
+        this.on('tap', e => {
+            switch (e.target) {
+                case this.menuBtn:
+                    this.trigger('switchScene', 'stage')
+                    break
+            }
+        })
         this.on('swipeUp', () => {
             this.moveCeil('up')
         })
