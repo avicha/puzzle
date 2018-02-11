@@ -7,9 +7,8 @@ export default class DrawingPieceSprite extends Sprite {
         super(...args)
     }
     draw(ctx) {
+        ctx.fillStyle = '#ffcc80'
+        ctx.fillRect(this.position.x, this.position.y, this.shape.width, this.shape.height)
         super.draw(ctx)
-        ctx.strokeStyle = '#f5ead6'
-        ctx.lineWidth = 2
-        ctx.strokeRect(this.position.x, this.position.y, this.shape.width, this.shape.height)
     }
 }

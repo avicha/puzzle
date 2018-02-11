@@ -15,8 +15,8 @@ export default class Menu extends BaseScene {
         stageColor.addColorStop(1, '#ffb74d')
         game.opts.stageColor = stageColor
         this.puzzle = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 100, 1, { text: 'P  U  Z  Z  L  E', fontColor: '#ff8a65', fontSize: 100, lineHeight: 150, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
-        this.beginBtn = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.pivot.y - 50, 1, { text: '开始游戏', fontColor: '#f5ead6', fontSize: 28, lineHeight: 28, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 180, height: 68, borderColor: '#ff8a65', borderWidth: 4, isFilled: true }))
-        this.settingBtn = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.pivot.y + 50, 1, { text: '游戏设置', fontColor: '#f5ead6', fontSize: 28, lineHeight: 28, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 180, height: 68, borderColor: '#ff8a65', borderWidth: 4, isFilled: true }))
+        this.beginBtn = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.pivot.y - 50, 1, { text: '开 始', fontColor: '#f5ead6', fontSize: 28, lineHeight: 28, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 180, height: 68, borderColor: '#ff8a65', borderWidth: 4, isFilled: true }))
+        this.settingBtn = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.pivot.y + 50, 1, { text: '排 行 榜', fontColor: '#f5ead6', fontSize: 28, lineHeight: 28, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 180, height: 68, borderColor: '#ff8a65', borderWidth: 4, isFilled: true }))
         this.maze = new Maze(6, 20)
         this.maze.make()
         this.maze.startAt(0, 1, 'up').endAt(5, 18, 'down').begin()
