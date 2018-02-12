@@ -17,8 +17,10 @@ export default class PassModal extends Sprite {
         this.context.fillRect(0, 0, this.width, this.height)
         let title = new Text(this.width / 2, this.height * 0.1, 1, { text: this.title, fontColor: '#fafafa', fontSize: 50, lineHeight: 50, align: 'center', valign: 'top' })
         this.context.drawImage(title.canvas, title.position.x, title.position.y)
-        let desc = new Text(this.width / 2, this.height * 0.4, 1, { text: this.desc, fontColor: '#fafafa', fontSize: 32, lineHeight: 80, align: 'center', valign: 'top' })
-        this.context.drawImage(desc.canvas, desc.position.x, desc.position.y)
+        if (this.desc) {
+            let desc = new Text(this.width / 2, this.height * 0.4, 1, { text: this.desc, fontColor: '#fafafa', fontSize: 32, lineHeight: 80, align: 'center', valign: 'top' })
+            this.context.drawImage(desc.canvas, desc.position.x, desc.position.y)
+        }
         let next = new Button(this.width / 2, this.height * 0.8, 1, { text: '下一关', fontColor: '#ff8a65', fontSize: 32, lineHeight: 32, width: 180, height: 68, align: 'center', valign: 'top', borderColor: '#fafafa', isFilled: true })
         next.draw(this.context)
     }
