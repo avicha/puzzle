@@ -165,7 +165,6 @@ export default class Stage1 extends BaseScene {
             this.currentScore = this.getChessboardScore(this.chessboard)
             if (!this.currentScore) {
                 this.isGameOver = true
-                Adapter.setStorage(`${this.name}_active`, true)
                 Adapter.setStorage(`${this.name}_score`, 1)
                 let lastCeil = this.ceilDoms[this.chessboard[this.currentRow][this.currentColumn]]
                 lastCeil.visiable = true
@@ -257,6 +256,7 @@ export default class Stage1 extends BaseScene {
                     break
                 case this.passModal:
                     if (this.nextScene) {
+                        Adapter.setStorage(`${this.nextScene}_active`, true)
                         this.leave(() => {
                             this.trigger('switchScene', this.nextScene)
                         })

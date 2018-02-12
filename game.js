@@ -8,6 +8,7 @@ import Adapter from 'app/adapter'
 
 let game = new Engine({ debug: false, stageScaleMode: 'cover', fps: 60, orientation: 'landscape' })
 game.setStageSize(1780, 750)
+Adapter.setStorage('scene1_1_active', true)
 game.launch(Stage)
 game.on('switchScene', (sceneName, ...args) => {
     switch (sceneName) {
