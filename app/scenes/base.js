@@ -8,17 +8,14 @@ export default class BaseScene extends Scene {
     }
     enter(callback) {
         this.leavingProgress = 1
-        this.leavingTween = new TWEEN.Tween(this).to({ leavingProgress: 0 }, 1000).easing(TWEEN.Easing.Quadratic.InOut).start()
+        this.leavingTween = new TWEEN.Tween(this).to({ leavingProgress: 0 }, 1000).easing(TWEEN.Easing.Quadratic.Out).start()
         if (callback) {
             this.leavingTween.onComplete(callback)
         }
     }
     leave(callback) {
-        this.leavingProgress = 0
-        this.leavingTween = new TWEEN.Tween(this).to({ leavingProgress: 1 }, 1000).easing(TWEEN.Easing.Quadratic.InOut).start()
-        if (callback) {
-            this.leavingTween.onComplete(callback)
-        }
+        this.leavingProgress = 1
+        callback()
     }
     update(dt) {
         super.update(dt)

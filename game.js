@@ -3,11 +3,12 @@ import Menu from 'app/scenes/menu'
 import Stage from 'app/scenes/stage'
 import Scene1_1 from 'app/scenes/stage1/scene1'
 import Scene1_2 from 'app/scenes/stage1/scene2'
+import Scene1_3 from 'app/scenes/stage1/scene3'
 import Adapter from 'app/adapter'
 
 let game = new Engine({ debug: false, stageScaleMode: 'cover', fps: 60, orientation: 'landscape' })
 game.setStageSize(1780, 750)
-game.launch(Menu)
+game.launch(Stage)
 game.on('switchScene', (sceneName, ...args) => {
     switch (sceneName) {
         case 'menu':
@@ -18,6 +19,8 @@ game.on('switchScene', (sceneName, ...args) => {
             return game.launch(Scene1_1, ...args)
         case 'scene1_2':
             return game.launch(Scene1_2, ...args)
+        case 'scene1_3':
+            return game.launch(Scene1_3, ...args)
     }
 })
 game.on('error', ({ message, stack }) => {
