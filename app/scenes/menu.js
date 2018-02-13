@@ -10,7 +10,6 @@ import TWEEN from '../../prime/tween'
 export default class Menu extends BaseScene {
     constructor(game) {
         super(game)
-        this.enter()
         let stageColor = game.context.createLinearGradient(0, 0, 0, this.game.stageHeight)
         stageColor.addColorStop(0, '#fff9c4')
         stageColor.addColorStop(1, '#ffb74d')
@@ -43,9 +42,7 @@ export default class Menu extends BaseScene {
         this.on('tap', e => {
             switch (e.target) {
                 case this.beginBtn:
-                    this.leave(() => {
-                        this.trigger('switchScene', 'stage')
-                    })
+                    this.trigger('switchScene', 'stage')
                     break
             }
         })

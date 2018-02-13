@@ -14,7 +14,6 @@ export default class Stage1 extends BaseScene {
     }
     constructor(game, opts) {
         super(game)
-        this.enter()
         Object.assign(this, opts)
         game.opts.stageColor = '#8fd5d5'
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
@@ -251,16 +250,12 @@ export default class Stage1 extends BaseScene {
         this.on('tap', e => {
             switch (e.target) {
                 case this.menuBtn:
-                    this.leave(() => {
-                        this.trigger('switchScene', 'stage')
-                    })
+                    this.trigger('switchScene', 'stage')
                     break
                 case this.passModal:
                     if (this.nextScene) {
                         Adapter.setStorage(`${this.nextScene}_active`, true)
-                        this.leave(() => {
-                            this.trigger('switchScene', this.nextScene)
-                        })
+                        this.trigger('switchScene', this.nextScene)
                     }
                     break
             }

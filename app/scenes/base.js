@@ -5,18 +5,14 @@ export default class BaseScene extends Scene {
     constructor(game) {
         super()
         this.game = game
+        this.enter()
     }
     enter(callback) {
-        this.leavingProgress = 1
-        this.leavingTween = new TWEEN.Tween(this).to({ leavingProgress: 0 }, 1000).easing(TWEEN.Easing.Quadratic.Out).start()
+        this.opacity = 1
+        this.enteringTween = new TWEEN.Tween(this).to({ opacity: 0 }, 1000).easing(TWEEN.Easing.Quadratic.Out).start()
         if (callback) {
-            this.leavingTween.onComplete(callback)
+            this.enteringTween.onComplete(callback)
         }
-    }
-    leave(callback) {
-        this.game.context.fillStyle = '#383838'
-        this.game.context.fillRect(this.game.renderStageZone.left, this.game.renderStageZone.top, this.game.renderStageZone.width, this.game.renderStageZone.height)
-        callback()
     }
     update(dt) {
         super.update(dt)
@@ -24,8 +20,8 @@ export default class BaseScene extends Scene {
     }
     draw(ctx) {
         super.draw(ctx)
-        if (this.leavingProgress) {
-            ctx.fillStyle = `rgba(56,56,56,${this.leavingProgress})`
+        if (this.opacity) {
+            ctx.fillStyle = `rgba(56,56,56,${this.opacity})`
             ctx.fillRect(this.game.renderStageZone.left, this.game.renderStageZone.top, this.game.renderStageZone.width, this.game.renderStageZone.height)
         }
     }

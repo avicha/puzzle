@@ -13,7 +13,6 @@ export default class Stage extends BaseScene {
     }
     constructor(game) {
         super(game)
-        this.enter()
         game.opts.stageColor = '#8fd5d5'
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
         let stageData = {
@@ -83,9 +82,7 @@ export default class Stage extends BaseScene {
                 }
             }
             if (nextScene) {
-                this.leave(() => {
-                    this.trigger('switchScene', nextScene)
-                })
+                this.trigger('switchScene', nextScene)
             }
         })
         this.on('moveLeft', ({ dx }) => {

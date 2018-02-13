@@ -11,6 +11,9 @@ game.setStageSize(1780, 750)
 Adapter.setStorage('scene1_1_active', true)
 game.launch(Stage)
 game.on('switchScene', (sceneName, ...args) => {
+    game.pause()
+    game._context.fillStyle = '#383838'
+    game._context.fillRect(game.renderScreenZone.left, game.renderScreenZone.top, game.renderScreenZone.width, game.renderScreenZone.height)
     switch (sceneName) {
         case 'menu':
             return game.launch(Menu, ...args)
