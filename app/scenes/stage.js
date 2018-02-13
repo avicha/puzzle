@@ -53,19 +53,19 @@ export default class Stage extends BaseScene {
         let scenesNumber = stageData.scenes.length
         let sceneWidth = 240
         let scenesNumberPerPage = scenesNumber < 4 ? scenesNumber : 4
-        this.scenePerWidth = this.game.renderStageZone.width / scenesNumberPerPage
-        let scenesContainerOffsetX = this.game.renderStageZone.left + (this.scenePerWidth - sceneWidth) / 2
+        let scenePerWidth = this.game.renderStageZone.width / scenesNumberPerPage
+        let scenesContainerOffsetX = this.game.renderStageZone.left + (scenePerWidth - sceneWidth) / 2
         let activeScenesNumber = 0
         this.scenes = stageData.scenes.map((sceneData, sceneIndex) => {
             let active = Adapter.getStorage(`${sceneData.scene}_active`, false)
             if (active) {
                 activeScenesNumber++
             }
-            return this.addGameObject(new StageSelector(scenesContainerOffsetX + sceneIndex * this.scenePerWidth, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score: Adapter.getStorage(`${sceneData.scene}_score`, 0), active, ...sceneData }))
+            return this.addGameObject(new StageSelector(scenesContainerOffsetX + sceneIndex * scenePerWidth, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score: Adapter.getStorage(`${sceneData.scene}_score`, 0), active, ...sceneData }))
         })
         this.title = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 100, 1, { text: stageData.title, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 50, lineHeight: 50, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
         this.desc = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 240, 1, { text: stageData.desc, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 30, lineHeight: 30, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
-        this.rightBounding = this.game.renderStageZone.right
+        this.rightBounding = this.game.renderStageZone.right - (scenePerWidth - sceneWidth) / 2
         this.leftBounding = scenesContainerOffsetX
         this.on('tap', e => {
             let nextScene
@@ -87,9 +87,9 @@ export default class Stage extends BaseScene {
         })
         this.on('moveLeft', ({ dx }) => {
             let last = this.scenes[this.scenes.length - 1]
-            if (last && last.position.x + this.scenePerWidth >= this.rightBounding) {
-                if (last.position.x + this.scenePerWidth + dx < this.rightBounding) {
-                    dx = this.rightBounding - (last.position.x + this.scenePerWidth)
+            if (last && last.position.x + last.shape.width >= this.rightBounding) {
+                if (last.position.x + last.shape.width + dx < this.rightBounding) {
+                    dx = this.rightBounding - (last.position.x + last.shape.width)
                 }
                 this.scenes.forEach(stageSelector => {
                     stageSelector.position.x += dx
