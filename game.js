@@ -13,7 +13,7 @@ game.launch(Stage)
 game.on('switchScene', (sceneName, ...args) => {
     game.pause()
     game._context.fillStyle = '#383838'
-    game._context.fillRect(game.renderScreenZone.left, game.renderScreenZone.top, game.renderScreenZone.width, game.renderScreenZone.height)
+    game._context.fillRect(0, 0, game._canvas.width, game._canvas.height)
     switch (sceneName) {
         case 'menu':
             return game.launch(Menu, ...args)
