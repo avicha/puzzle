@@ -14,7 +14,7 @@ export default class Stage extends BaseScene {
     constructor(game) {
         super(game)
         game.opts.stageColor = '#8fd5d5'
-        this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
+        this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn, shape: new Rectangle(-20, -20, resources.menu_btn.sizeWidth + 40, resources.menu_btn.sizeHeight + 40) }))
         let stageData = {
             title: '还    原',
             desc: '把 错 乱 的 拼 图 回 到 最 初 的 状 态',
