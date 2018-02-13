@@ -6,7 +6,7 @@ import DrawingPiece from '../../sprites/drawing_piece'
 import PassModal from '../../sprites/pass_modal'
 import Adapter from '../../adapter'
 import TWEEN from '../../../prime/tween'
-import Rectangle from '../../prime/rectangle'
+import Rectangle from '../../../prime/rectangle'
 
 export default class Stage1 extends BaseScene {
     static getResources() {
