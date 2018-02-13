@@ -20,6 +20,7 @@ export default class Stage1 extends BaseScene {
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn }))
         this.drawing = this.addGameObject(new Sprite(game.renderStageZone.left + game.renderStageZone.width / 4 - this.drawingTexture.sizeWidth / 2, game.renderStageZone.bottom - this.drawingTexture.sizeHeight - 100, 1, { texture: this.drawingTexture }))
         this.title = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: this.title, fontSize: 28, lineHeight: 28, fontColor: '#8fd5d5', align: Button.ALIGN.CENTER, valign: Button.VALIGN.TOP, width: 240, height: 68, borderColor: '#fafafa', borderWidth: 4, isFilled: true }))
+        this.passModal = this.addGameObject(new PassModal(this.game.renderStageZone.left, this.game.renderStageZone.top - this.game.renderStageZone.height, 1000, { width: this.game.renderStageZone.width, height: this.game.renderStageZone.height, alpha: 0, visiable: false, title: '恭  喜  您 ， 成  功  过  关\n====================', desc: this.desc }))
         this.initGame()
     }
     getHash(chessboard) {
@@ -171,7 +172,7 @@ export default class Stage1 extends BaseScene {
                 lastCeil.alpha = 0
                 let tween = new TWEEN.Tween(lastCeil).to({ alpha: 1 }, 1000).easing(TWEEN.Easing.Quadratic.In).delay(500).start()
                 tween.onComplete(() => {
-                    this.passModal = this.addGameObject(new PassModal(this.game.renderStageZone.left, this.game.renderStageZone.top - this.game.renderStageZone.height, 1000, { width: this.game.renderStageZone.width, height: this.game.renderStageZone.height, alpha: 0, title: '恭  喜  您 ， 成  功  过  关\n====================', desc: this.desc }))
+                    this.passModal.visiable = true
                     new TWEEN.Tween(this.passModal.position).to({ y: this.game.renderStageZone.top }, 600).easing(TWEEN.Easing.Linear.None).start()
                     new TWEEN.Tween(this.passModal).to({ alpha: 1 }, 600).easing(TWEEN.Easing.Linear.None).start()
                 })

@@ -14,7 +14,8 @@ export default class BaseScene extends Scene {
         }
     }
     leave(callback) {
-        this.leavingProgress = 1
+        this.game.context.fillStyle = '#383838'
+        this.game.context.fillRect(this.game.renderStageZone.left, this.game.renderStageZone.top, this.game.renderStageZone.width, this.game.renderStageZone.height)
         callback()
     }
     update(dt) {

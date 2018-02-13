@@ -88,7 +88,7 @@ export default class Stage extends BaseScene {
                 })
             }
         })
-        this.game.on('moveLeft', ({ dx }) => {
+        this.on('moveLeft', ({ dx }) => {
             let last = this.scenes[this.scenes.length - 1]
             if (last && last.position.x + this.scenePerWidth >= this.rightBounding) {
                 if (last.position.x + this.scenePerWidth + dx < this.rightBounding) {
@@ -99,7 +99,7 @@ export default class Stage extends BaseScene {
                 })
             }
         })
-        this.game.on('moveRight', ({ dx }) => {
+        this.on('moveRight', ({ dx }) => {
             let first = this.scenes[0]
             if (first && first.position.x <= this.leftBounding) {
                 if (first.position.x + dx > this.leftBounding) {
