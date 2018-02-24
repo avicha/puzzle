@@ -3,9 +3,9 @@ import resources from '../../resources'
 
 export default class Scene1_2 extends Stage1 {
     static getResources() {
-        return super.getResources().concat([resources.bird, resources.bird_piece])
+        return super.getResources().concat([resources.tree, resources.tree_piece])
     }
     constructor(game) {
-        super(game, { drawingTexture: resources.bird, drawingPieceTexture: resources.bird_piece, steps: 2, name: 'scene1_2', nextScene: 'scene1_3', title: '黄  莺  🐦', desc: '留 连 戏 蝶 时 时 舞 ，\n自 在 娇 莺 恰 恰 啼。\n  ——  杜甫《江畔独步寻花·其六》' })
+        super(game, { drawingTexture: resources.tree, drawingPieceTexture: resources.tree_piece, currentRow: 2, currentColumn: 0, steps: 20, name: 'scene1_2', nextScene: 'scene1_3', title: '桃  树', desc: '人 面 不 知 何 处 去，\n桃 花 依 旧 笑 春 风。\n  ——  崔护《题都城南庄》' })
     }
 }

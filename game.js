@@ -4,6 +4,9 @@ import Stage from 'app/scenes/stage'
 import Scene1_1 from 'app/scenes/stage1/scene1'
 import Scene1_2 from 'app/scenes/stage1/scene2'
 import Scene1_3 from 'app/scenes/stage1/scene3'
+import Scene1_4 from 'app/scenes/stage1/scene4'
+import Scene1_5 from 'app/scenes/stage1/scene5'
+import Scene1_6 from 'app/scenes/stage1/scene6'
 import Adapter from 'app/adapter'
 
 let game = new Engine({ debug: false, stageScaleMode: 'cover', fps: 60, orientation: 'landscape' })
@@ -25,6 +28,12 @@ game.on('switchScene', (sceneName, ...args) => {
             return game.launch(Scene1_2, ...args)
         case 'scene1_3':
             return game.launch(Scene1_3, ...args)
+        case 'scene1_4':
+            return game.launch(Scene1_4, ...args)
+        case 'scene1_5':
+            return game.launch(Scene1_5, ...args)
+        case 'scene1_6':
+            return game.launch(Scene1_6, ...args)
     }
 })
 game.on('error', ({ message, stack }) => {

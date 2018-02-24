@@ -10,9 +10,6 @@ export default class BaseScene extends Scene {
     enter(callback) {
         this.opacity = 1
         this.enteringTween = new TWEEN.Tween(this).to({ opacity: 0 }, 1000).easing(TWEEN.Easing.Quadratic.Out).start()
-        if (callback) {
-            this.enteringTween.onComplete(callback)
-        }
     }
     update(dt) {
         super.update(dt)

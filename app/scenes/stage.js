@@ -9,7 +9,7 @@ import resources from '../resources'
 
 export default class Stage extends BaseScene {
     static getResources() {
-        return [resources.menu_btn, resources.tree_thumb, resources.clock_thumb, resources.bird_thumb, resources.stage_empty, resources.star_full, resources.star_empty]
+        return [resources.menu_btn, resources.chrysanthemum_thumb, resources.tree_thumb, resources.lotus_thumb, resources.horse_thumb, resources.bird_thumb, resources.butterfly_thumb, resources.stage_empty, resources.star_full, resources.star_empty]
     }
     constructor(game) {
         super(game)
@@ -21,32 +21,32 @@ export default class Stage extends BaseScene {
             scenes: [{
                 scene: 'scene1_1',
                 stage: '1-1',
-                texture: resources.clock_thumb,
+                texture: resources.chrysanthemum_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene1_2',
                 stage: '1-2',
-                texture: resources.bird_thumb,
+                texture: resources.tree_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene1_3',
                 stage: '1-3',
-                texture: resources.tree_thumb,
+                texture: resources.lotus_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene1_4',
                 stage: '1-4',
-                texture: resources.tree_thumb,
+                texture: resources.horse_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene1_5',
                 stage: '1-5',
-                texture: resources.tree_thumb,
+                texture: resources.bird_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene1_6',
                 stage: '1-6',
-                texture: resources.tree_thumb,
+                texture: resources.butterfly_thumb,
                 type: 'stageSelector'
             }]
         }

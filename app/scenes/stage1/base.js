@@ -19,7 +19,7 @@ export default class Stage1 extends BaseScene {
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn, shape: new Rectangle(-20, -20, resources.menu_btn.sizeWidth + 40, resources.menu_btn.sizeHeight + 40) }))
         this.drawing = this.addGameObject(new Sprite(game.renderStageZone.left + game.renderStageZone.width / 4 - this.drawingTexture.sizeWidth / 2, game.renderStageZone.bottom - this.drawingTexture.sizeHeight - 100, 1, { texture: this.drawingTexture }))
         this.title = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: this.title, fontSize: 28, lineHeight: 28, fontColor: '#8fd5d5', align: Button.ALIGN.CENTER, valign: Button.VALIGN.TOP, width: 240, height: 68, borderColor: '#fafafa', borderWidth: 4, isFilled: true }))
-        this.passModal = this.addGameObject(new PassModal(this.game.renderStageZone.left, this.game.renderStageZone.top - this.game.renderStageZone.height, 1000, { width: this.game.renderStageZone.width, height: this.game.renderStageZone.height, alpha: 0, visiable: false, title: '恭  喜  您 ， 成  功  过  关\n====================', desc: this.desc }))
+        this.passModal = this.addGameObject(new PassModal(this.game.renderStageZone.left, this.game.renderStageZone.top - this.game.renderStageZone.height, 1000, { width: this.game.renderStageZone.width, height: this.game.renderStageZone.height, alpha: 0, visible: false, title: '恭  喜  您 ， 成  功  过  关\n====================', desc: this.desc }))
         this.initGame()
     }
     getHash(chessboard) {
@@ -123,7 +123,7 @@ export default class Stage1 extends BaseScene {
                         this.chessboard[this.currentRow + 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
                         this.chessboard[this.currentRow][this.currentColumn] = tmp
                         this.currentRow++
-                            this.ceilDoms[this.total].position.y += this.pieceHeight
+                            this.ceilDoms[this.invisibleCeil].position.y += this.pieceHeight
                         let ceilDom = this.ceilDoms[tmp]
                         ceilDom.position.y -= this.pieceHeight
                     }
@@ -134,7 +134,7 @@ export default class Stage1 extends BaseScene {
                         this.chessboard[this.currentRow][this.currentColumn - 1] = this.chessboard[this.currentRow][this.currentColumn]
                         this.chessboard[this.currentRow][this.currentColumn] = tmp
                         this.currentColumn--
-                            this.ceilDoms[this.total].position.x -= this.pieceWidth
+                            this.ceilDoms[this.invisibleCeil].position.x -= this.pieceWidth
                         let ceilDom = this.ceilDoms[tmp]
                         ceilDom.position.x += this.pieceWidth
                     }
@@ -145,7 +145,7 @@ export default class Stage1 extends BaseScene {
                         this.chessboard[this.currentRow - 1][this.currentColumn] = this.chessboard[this.currentRow][this.currentColumn]
                         this.chessboard[this.currentRow][this.currentColumn] = tmp
                         this.currentRow--
-                            this.ceilDoms[this.total].position.y -= this.pieceHeight
+                            this.ceilDoms[this.invisibleCeil].position.y -= this.pieceHeight
                         let ceilDom = this.ceilDoms[tmp]
                         ceilDom.position.y += this.pieceHeight
                     }
@@ -156,7 +156,7 @@ export default class Stage1 extends BaseScene {
                         this.chessboard[this.currentRow][this.currentColumn + 1] = this.chessboard[this.currentRow][this.currentColumn]
                         this.chessboard[this.currentRow][this.currentColumn] = tmp
                         this.currentColumn++
-                            this.ceilDoms[this.total].position.x += this.pieceWidth
+                            this.ceilDoms[this.invisibleCeil].position.x += this.pieceWidth
                         let ceilDom = this.ceilDoms[tmp]
                         ceilDom.position.x -= this.pieceWidth
                     }
@@ -167,13 +167,13 @@ export default class Stage1 extends BaseScene {
                 this.isGameOver = true
                 Adapter.setStorage(`${this.name}_score`, 1)
                 let lastCeil = this.ceilDoms[this.chessboard[this.currentRow][this.currentColumn]]
-                lastCeil.visiable = true
+                lastCeil.visible = true
                 lastCeil.alpha = 0
                 let tween = new TWEEN.Tween(lastCeil).to({ alpha: 1 }, 1000).easing(TWEEN.Easing.Quadratic.In).delay(500).start()
                 tween.onComplete(() => {
-                    this.passModal.visiable = true
-                    new TWEEN.Tween(this.passModal.position).to({ y: this.game.renderStageZone.top }, 600).easing(TWEEN.Easing.Linear.None).start()
-                    new TWEEN.Tween(this.passModal).to({ alpha: 1 }, 600).easing(TWEEN.Easing.Linear.None).start()
+                    this.passModal.visible = true
+                    new TWEEN.Tween(this.passModal.position).to({ y: this.game.renderStageZone.top }, 600).easing(TWEEN.Easing.Linear.None).delay(1000).start()
+                    new TWEEN.Tween(this.passModal).to({ alpha: 1 }, 600).easing(TWEEN.Easing.Linear.None).delay(1000).start()
                 })
             }
         }
@@ -192,7 +192,6 @@ export default class Stage1 extends BaseScene {
         this.chessboard = []
         this.columns = this.drawingPieceTexture.columns
         this.rows = this.drawingPieceTexture.rows
-        this.total = this.rows * this.columns - 1
         this.chessboardHash = {}
         this.ceilDoms = []
         this.isGameOver = false
@@ -203,8 +202,13 @@ export default class Stage1 extends BaseScene {
                 this.chessboard[i][j] = tile
             }
         }
-        this.currentRow = this.rows - 1
-        this.currentColumn = this.columns - 1
+        if (this.currentRow == undefined) {
+            this.currentRow = this.rows - 1
+        }
+        if (this.currentColumn == undefined) {
+            this.currentColumn = this.columns - 1
+        }
+        this.invisibleCeil = this.currentRow * this.columns + this.currentColumn
         this.currentScore = this.getChessboardScore(this.chessboard)
         let hash = this.getHash(this.chessboard)
         this.chessboardHash[hash] = true
@@ -238,7 +242,7 @@ export default class Stage1 extends BaseScene {
                 let posX = this.piecesBgPosX + this.pieceBgBorderWidth + j * this.pieceWidth
                 let posY = this.piecesBgPosY + this.pieceBgBorderWidth + i * this.pieceHeight
                 let tile = this.chessboard[i][j]
-                let drawingPiece = this.addGameObject(new DrawingPiece(posX, posY, 1, { texture: this.drawingPieceTexture, tile: tile, visiable: tile == this.total ? false : true }))
+                let drawingPiece = this.addGameObject(new DrawingPiece(posX, posY, 1, { texture: this.drawingPieceTexture, tile: tile, visible: tile == this.invisibleCeil ? false : true }))
                 this.ceilDoms[tile] = drawingPiece
             }
         }
