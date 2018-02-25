@@ -2,7 +2,7 @@ import Sprite from '../../prime/sprite'
 import resources from '../resources'
 import Rectangle from '../../prime/rectangle'
 
-export default class DrawingPieceSprite extends Sprite {
+export default class DrawingPieceSprite1 extends Sprite {
     constructor(...args) {
         super(...args)
     }

@@ -2,7 +2,7 @@ import BaseScene from '../base'
 import Sprite from '../../../prime/sprite'
 import Button from '../../../prime/ui/button'
 import resources from '../../resources'
-import DrawingPiece from '../../sprites/drawing_piece'
+import DrawingPiece1 from '../../sprites/drawing_piece1'
 import PassModal from '../../sprites/pass_modal'
 import Adapter from '../../adapter'
 import TWEEN from '../../../prime/tween'
@@ -242,7 +242,7 @@ export default class Stage1 extends BaseScene {
                 let posX = this.piecesBgPosX + this.pieceBgBorderWidth + j * this.pieceWidth
                 let posY = this.piecesBgPosY + this.pieceBgBorderWidth + i * this.pieceHeight
                 let tile = this.chessboard[i][j]
-                let drawingPiece = this.addGameObject(new DrawingPiece(posX, posY, 1, { texture: this.drawingPieceTexture, tile: tile, visible: tile == this.invisibleCeil ? false : true }))
+                let drawingPiece = this.addGameObject(new DrawingPiece1(posX, posY, 1, { texture: this.drawingPieceTexture, tile: tile, visible: tile == this.invisibleCeil ? false : true }))
                 this.ceilDoms[tile] = drawingPiece
             }
         }
@@ -254,7 +254,7 @@ export default class Stage1 extends BaseScene {
         this.on('tap', e => {
             switch (e.target) {
                 case this.menuBtn:
-                    this.trigger('switchScene', 'stage')
+                    this.trigger('switchScene', 'stage1')
                     break
                 case this.passModal:
                     if (this.nextScene) {

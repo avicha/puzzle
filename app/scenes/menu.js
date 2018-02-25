@@ -42,7 +42,7 @@ export default class Menu extends BaseScene {
         this.on('tap', e => {
             switch (e.target) {
                 case this.beginBtn:
-                    this.trigger('switchScene', 'stage')
+                    this.trigger('switchScene', 'stage1')
                     break
             }
         })

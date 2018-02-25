@@ -7,49 +7,14 @@ import Adapter from '../adapter'
 import StageSelector from '../sprites/stage_selector'
 import resources from '../resources'
 
-export default class Stage extends BaseScene {
+export default class StageSelectorScene extends BaseScene {
     static getResources() {
-        return [resources.menu_btn, resources.chrysanthemum_thumb, resources.tree_thumb, resources.lotus_thumb, resources.horse_thumb, resources.bird_thumb, resources.butterfly_thumb, resources.stage_empty, resources.star_full, resources.star_empty]
+        return [resources.menu_btn, resources.stage_empty]
     }
-    constructor(game) {
+    constructor(game, stageData) {
         super(game)
         game.opts.stageColor = '#8fd5d5'
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn, shape: new Rectangle(-20, -20, resources.menu_btn.sizeWidth + 40, resources.menu_btn.sizeHeight + 40) }))
-        let stageData = {
-            title: '还    原',
-            desc: '把 错 乱 的 拼 图 回 到 最 初 的 状 态',
-            scenes: [{
-                scene: 'scene1_1',
-                stage: '1-1',
-                texture: resources.chrysanthemum_thumb,
-                type: 'stageSelector'
-            }, {
-                scene: 'scene1_2',
-                stage: '1-2',
-                texture: resources.tree_thumb,
-                type: 'stageSelector'
-            }, {
-                scene: 'scene1_3',
-                stage: '1-3',
-                texture: resources.lotus_thumb,
-                type: 'stageSelector'
-            }, {
-                scene: 'scene1_4',
-                stage: '1-4',
-                texture: resources.horse_thumb,
-                type: 'stageSelector'
-            }, {
-                scene: 'scene1_5',
-                stage: '1-5',
-                texture: resources.bird_thumb,
-                type: 'stageSelector'
-            }, {
-                scene: 'scene1_6',
-                stage: '1-6',
-                texture: resources.butterfly_thumb,
-                type: 'stageSelector'
-            }]
-        }
         let scenesNumber = stageData.scenes.length
         let sceneWidth = 240
         let scenesNumberPerPage = scenesNumber < 4 ? scenesNumber : 4
@@ -57,7 +22,7 @@ export default class Stage extends BaseScene {
         let scenesContainerOffsetX = this.game.renderStageZone.left + (scenePerWidth - sceneWidth) / 2
         let activeScenesNumber = 0
         this.scenes = stageData.scenes.map((sceneData, sceneIndex) => {
-            let active = Adapter.getStorage(`${sceneData.scene}_active`, false)
+            let active = Adapter.getStorage(`${sceneData.scene}_active`, true)
             if (active) {
                 activeScenesNumber++
             }

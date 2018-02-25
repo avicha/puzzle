@@ -1,0 +1,46 @@
+import StageSelectorScene from '../stage_selector'
+import resources from '../../resources'
+
+export default class StageSelector2 extends StageSelectorScene {
+    static getResources() {
+        return super.getResources().concat([resources.flower_thumb, resources.bedroom_thumb, resources.mother_thumb, resources.kiss_thumb, resources.mona_lisa_thumb, resources.cows_thumb])
+    }
+    constructor(game) {
+        let stageData = {
+            title: '修    复',
+            desc: '把 沾 污 的 名 画 修 复 成 完 好 的 状 态',
+            scenes: [{
+                scene: 'scene2_1',
+                stage: '2-1',
+                texture: resources.flower_thumb,
+                type: 'stageSelector'
+            }, {
+                scene: 'scene2_2',
+                stage: '2-2',
+                texture: resources.bedroom_thumb,
+                type: 'stageSelector'
+            }, {
+                scene: 'scene2_3',
+                stage: '2-3',
+                texture: resources.mother_thumb,
+                type: 'stageSelector'
+            }, {
+                scene: 'scene2_4',
+                stage: '2-4',
+                texture: resources.kiss_thumb,
+                type: 'stageSelector'
+            }, {
+                scene: 'scene2_5',
+                stage: '2-5',
+                texture: resources.mona_lisa_thumb,
+                type: 'stageSelector'
+            }, {
+                scene: 'scene2_6',
+                stage: '2-6',
+                texture: resources.cows_thumb,
+                type: 'stageSelector'
+            }]
+        }
+        super(game, stageData)
+    }
+}
