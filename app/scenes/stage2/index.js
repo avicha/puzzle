@@ -3,7 +3,7 @@ import resources from '../../resources'
 
 export default class StageSelector2 extends StageSelectorScene {
     static getResources() {
-        return super.getResources().concat([resources.flower_thumb, resources.bedroom_thumb, resources.mother_thumb, resources.kiss_thumb, resources.mona_lisa_thumb, resources.cows_thumb])
+        return super.getResources().concat([resources.painting_flower_thumb, resources.painting_bedroom_thumb, resources.painting_mother_thumb, resources.painting_kiss_thumb, resources.painting_mona_lisa_thumb, resources.painting_cows_thumb])
     }
     constructor(game) {
         let stageData = {
@@ -12,32 +12,32 @@ export default class StageSelector2 extends StageSelectorScene {
             scenes: [{
                 scene: 'scene2_1',
                 stage: '2-1',
-                texture: resources.flower_thumb,
+                texture: resources.painting_flower_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene2_2',
                 stage: '2-2',
-                texture: resources.bedroom_thumb,
+                texture: resources.painting_bedroom_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene2_3',
                 stage: '2-3',
-                texture: resources.mother_thumb,
+                texture: resources.painting_mother_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene2_4',
                 stage: '2-4',
-                texture: resources.kiss_thumb,
+                texture: resources.painting_kiss_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene2_5',
                 stage: '2-5',
-                texture: resources.mona_lisa_thumb,
+                texture: resources.painting_mona_lisa_thumb,
                 type: 'stageSelector'
             }, {
                 scene: 'scene2_6',
                 stage: '2-6',
-                texture: resources.cows_thumb,
+                texture: resources.painting_cows_thumb,
                 type: 'stageSelector'
             }]
         }
