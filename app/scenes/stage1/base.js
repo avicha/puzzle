@@ -21,6 +21,7 @@ export default class Stage1 extends BaseScene {
         this.title = this.addGameObject(new Button(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 50, 1, { text: this.title, fontSize: 28, lineHeight: 28, fontColor: '#8fd5d5', align: Button.ALIGN.CENTER, valign: Button.VALIGN.TOP, width: 240, height: 68, borderColor: '#fafafa', borderWidth: 4, isFilled: true }))
         this.passModal = this.addGameObject(new PassModal(this.game.renderStageZone.left, this.game.renderStageZone.top - this.game.renderStageZone.height, 1000, { width: this.game.renderStageZone.width, height: this.game.renderStageZone.height, alpha: 0, visible: false, title: '恭  喜  您 ， 成  功  过  关\n====================', desc: this.desc }))
         this.initGame()
+        Adapter.setStorage('last_stage_scene', this.name)
     }
     getHash(chessboard) {
         let hash = ''
@@ -169,11 +170,11 @@ export default class Stage1 extends BaseScene {
                 let lastCeil = this.ceilDoms[this.chessboard[this.currentRow][this.currentColumn]]
                 lastCeil.visible = true
                 lastCeil.alpha = 0
-                let tween = new TWEEN.Tween(lastCeil).to({ alpha: 1 }, 1000).easing(TWEEN.Easing.Quadratic.In).delay(500).start()
+                let tween = new TWEEN.Tween(lastCeil).to({ alpha: 1 }, 1000).easing(TWEEN.Easing.Quadratic.In).delay(600).start()
                 tween.onComplete(() => {
                     this.passModal.visible = true
-                    new TWEEN.Tween(this.passModal.position).to({ y: this.game.renderStageZone.top }, 600).easing(TWEEN.Easing.Linear.None).delay(1000).start()
-                    new TWEEN.Tween(this.passModal).to({ alpha: 1 }, 600).easing(TWEEN.Easing.Linear.None).delay(1000).start()
+                    new TWEEN.Tween(this.passModal.position).to({ y: this.game.renderStageZone.top }, 400).easing(TWEEN.Easing.Linear.None).delay(1000).start()
+                    new TWEEN.Tween(this.passModal).to({ alpha: 1 }, 400).easing(TWEEN.Easing.Linear.None).delay(1000).start()
                 })
             }
         }

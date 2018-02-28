@@ -5,6 +5,7 @@ import Rectangle from '../../prime/rectangle'
 import Text from '../../prime/ui/text'
 import Adapter from '../adapter'
 import StageSelector from '../sprites/stage_selector'
+import TWEEN from '../../prime/tween'
 import resources from '../resources'
 
 export default class StageSelectorScene extends BaseScene {
@@ -17,21 +18,21 @@ export default class StageSelectorScene extends BaseScene {
         this.menuBtn = this.addGameObject(new Sprite(game.renderStageZone.left + 50, game.renderStageZone.top + 50, 1, { texture: resources.menu_btn, shape: new Rectangle(-20, -20, resources.menu_btn.sizeWidth + 40, resources.menu_btn.sizeHeight + 40) }))
         let scenesNumber = stageData.scenes.length
         let sceneWidth = 240
-        let scenesNumberPerPage = scenesNumber < 4 ? scenesNumber : 4
-        let scenePerWidth = this.game.renderStageZone.width / scenesNumberPerPage
-        let scenesContainerOffsetX = this.game.renderStageZone.left + (scenePerWidth - sceneWidth) / 2
-        let activeScenesNumber = 0
+        let scenesNumberPerPage = 4
+        this.scenePerWidth = this.game.renderStageZone.width / scenesNumberPerPage
+        let lastStageScene = Adapter.getStorage('last_stage_scene')
+        let index = stageData.scenes.findIndex(sceneData => { return sceneData.scene == lastStageScene })
+        this.currentPage = ~index ? Math.floor(index / scenesNumberPerPage) : 0
+        this.pageCount = Math.floor((scenesNumber - 1) / scenesNumberPerPage)
+        let scenesContainerOffsetX = -this.currentPage * this.game.renderStageZone.width + this.game.renderStageZone.left + (this.scenePerWidth - sceneWidth) / 2
         this.scenes = stageData.scenes.map((sceneData, sceneIndex) => {
             let active = Adapter.getStorage(`${sceneData.scene}_active`, true)
-            if (active) {
-                activeScenesNumber++
-            }
-            return this.addGameObject(new StageSelector(scenesContainerOffsetX + sceneIndex * scenePerWidth, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score: Adapter.getStorage(`${sceneData.scene}_score`, 0), active, ...sceneData }))
+            let score = Adapter.getStorage(`${sceneData.scene}_score`, 0)
+            let sceneX = scenesContainerOffsetX + sceneIndex * this.scenePerWidth
+            return this.addGameObject(new StageSelector(sceneX, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score, active, ...sceneData }))
         })
         this.title = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 100, 1, { text: stageData.title, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 50, lineHeight: 50, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
         this.desc = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 240, 1, { text: stageData.desc, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 30, lineHeight: 30, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
-        this.rightBounding = this.game.renderStageZone.right - (scenePerWidth - sceneWidth) / 2
-        this.leftBounding = scenesContainerOffsetX
         this.on('tap', e => {
             let nextScene
             switch (e.target) {
@@ -50,27 +51,49 @@ export default class StageSelectorScene extends BaseScene {
                 this.trigger('switchScene', nextScene)
             }
         })
-        this.on('moveLeft', ({ dx }) => {
-            let last = this.scenes[this.scenes.length - 1]
-            if (last && last.position.x + last.shape.width >= this.rightBounding) {
-                if (last.position.x + last.shape.width + dx < this.rightBounding) {
-                    dx = this.rightBounding - (last.position.x + last.shape.width)
-                }
-                this.scenes.forEach(stageSelector => {
-                    stageSelector.position.x += dx
-                })
+        this.on('swipeLeft', () => {
+            if (this.currentPage < this.pageCount) {
+                this.currentPage++
             }
+            let scenesContainerOffsetX = -this.currentPage * this.game.renderStageZone.width + this.game.renderStageZone.left + (this.scenePerWidth - sceneWidth) / 2
+            this.scenes.forEach((stageSelector, sceneIndex) => {
+                let sceneX = scenesContainerOffsetX + sceneIndex * this.scenePerWidth
+                new TWEEN.Tween(stageSelector.position).to({ x: sceneX }, 400).easing(TWEEN.Easing.Quartic.Out).start()
+            })
         })
-        this.on('moveRight', ({ dx }) => {
-            let first = this.scenes[0]
-            if (first && first.position.x <= this.leftBounding) {
-                if (first.position.x + dx > this.leftBounding) {
-                    dx = this.leftBounding - first.position.x
-                }
-                this.scenes.forEach(stageSelector => {
-                    stageSelector.position.x += dx
-                })
+        this.on('swipeRight', () => {
+            if (this.currentPage) {
+                this.currentPage--
             }
+            let scenesContainerOffsetX = -this.currentPage * this.game.renderStageZone.width + this.game.renderStageZone.left + (this.scenePerWidth - sceneWidth) / 2
+            this.scenes.forEach((stageSelector, sceneIndex) => {
+                let sceneX = scenesContainerOffsetX + sceneIndex * this.scenePerWidth
+                new TWEEN.Tween(stageSelector.position).to({ x: sceneX }, 400).easing(TWEEN.Easing.Quartic.Out).start()
+            })
         })
+        this.on('touchstart', e => {
+            this.touchX = e.x
+            this.touchY = e.y
+        })
+        this.on('touchmove', e => {
+            let dx = e.x - this.touchX
+            this.scenes.forEach((stageSelector, sceneIndex) => {
+                stageSelector.position.x += dx
+            })
+            this.touchX = e.x
+            this.touchY = e.y
+        })
+    }
+    draw(ctx) {
+        super.draw(ctx)
+        let offsetX = this.game.renderStageZone.pivot.x - (this.pageCount + 1) * 100 / 2
+        for (let i = 0; i <= this.pageCount; i++) {
+            if (i == this.currentPage) {
+                ctx.fillStyle = '#00acc1'
+            } else {
+                ctx.fillStyle = '#f5f5f5'
+            }
+            ctx.fillRect(offsetX + 100 * i + 10, this.game.renderStageZone.bottom - 80, 80, 10)
+        }
     }
 }
