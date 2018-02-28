@@ -8,35 +8,44 @@ import resources from '../resources'
 import TWEEN from '../../prime/tween'
 
 export default class Menu extends BaseScene {
+    static getResources() {
+        return [resources.game_title, resources.menu_item_bg]
+    }
     constructor(game) {
         super(game)
         game.opts.stageColor = '#8fd8ab'
-        this.puzzle = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 60, 1, { text: '图 谜', fontColor: '#f5f5f5', fontSize: 100, lineHeight: 150, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
-        this.stage1Btn = this.addGameObject(new Button(this.game.renderStageZone.left + this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y - 100, 1, { text: '1. 还 原', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
-        this.stage2Btn = this.addGameObject(new Button(this.game.renderStageZone.right - this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y - 100, 1, { text: '2. 修 复', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
-        this.stage3Btn = this.addGameObject(new Button(this.game.renderStageZone.left + this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y, 1, { text: '3. 还 原', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
-        this.stage4Btn = this.addGameObject(new Button(this.game.renderStageZone.right - this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y, 1, { text: '4. 修 复', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
-        this.stage5Btn = this.addGameObject(new Button(this.game.renderStageZone.left + this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y + 100, 1, { text: '5. 还 原', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
-        this.stage6Btn = this.addGameObject(new Button(this.game.renderStageZone.right - this.game.renderStageZone.width / 4, this.game.renderStageZone.pivot.y + 100, 1, { text: '6. 修 复', fontColor: '#f5f5f5', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 200, height: 80 }))
+        this.puzzle = this.addGameObject(new Sprite(this.game.renderStageZone.pivot.x - resources.game_title.sizeWidth / 2, this.game.renderStageZone.top + 60, 1, { texture: resources.game_title }))
+
+        this.stage1Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 3 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
+        this.stage1Text = this.addGameObject(new Button(this.game.renderStageZone.left + 3 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+
+        this.stage2Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 4.5 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y + 85, 1, { texture: resources.menu_item_bg }))
+        this.stage2Text = this.addGameObject(new Button(this.game.renderStageZone.left + 4.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 145, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+
+        this.stage3Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 6 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
+        this.stage3Text = this.addGameObject(new Button(this.game.renderStageZone.left + 6 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+
+        this.stage4Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 7.5 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y + 85, 1, { texture: resources.menu_item_bg }))
+        this.stage4Text = this.addGameObject(new Button(this.game.renderStageZone.left + 7.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 145, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+
+        this.stage5Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 9 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
+        this.stage5Text = this.addGameObject(new Button(this.game.renderStageZone.left + 9 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
         this.on('tap', e => {
             switch (e.target) {
-                case this.stage1Btn:
+                case this.stage1Text:
                     this.trigger('switchScene', 'stage1')
                     break
-                case this.stage2Btn:
+                case this.stage2Text:
                     this.trigger('switchScene', 'stage2')
                     break
-                case this.stage3Btn:
+                case this.stage3Text:
                     this.trigger('switchScene', 'stage3')
                     break
-                case this.stage4Btn:
+                case this.stage4Text:
                     this.trigger('switchScene', 'stage4')
                     break
-                case this.stage5Btn:
+                case this.stage5Text:
                     this.trigger('switchScene', 'stage5')
-                    break
-                case this.stage6Btn:
-                    this.trigger('switchScene', 'stage6')
                     break
             }
         })
@@ -90,5 +99,22 @@ export default class Menu extends BaseScene {
         ctx.closePath()
         ctx.restore()
         super.draw(ctx)
+        ctx.beginPath()
+        ctx.strokeStyle = '#757575'
+        ctx.lineWidth = 4
+        ctx.moveTo(this.stage1Btn.position.x + this.stage1Btn.texture.sizeWidth / 2, this.game.renderStageZone.top)
+        ctx.lineTo(this.stage1Btn.position.x + this.stage1Btn.texture.sizeWidth / 2, this.stage1Btn.position.y)
+        ctx.moveTo(this.stage1Btn.position.x + this.stage1Btn.texture.sizeWidth, this.stage1Btn.position.y + this.stage1Btn.texture.sizeHeight / 2)
+        ctx.lineTo(this.stage2Btn.position.x, this.stage2Btn.position.y + this.stage2Btn.texture.sizeHeight / 2)
+        ctx.moveTo(this.stage2Btn.position.x + this.stage2Btn.texture.sizeWidth, this.stage2Btn.position.y + this.stage2Btn.texture.sizeHeight / 2)
+        ctx.lineTo(this.stage3Btn.position.x, this.stage3Btn.position.y + this.stage3Btn.texture.sizeHeight / 2)
+        ctx.moveTo(this.stage3Btn.position.x + this.stage3Btn.texture.sizeWidth, this.stage3Btn.position.y + this.stage3Btn.texture.sizeHeight / 2)
+        ctx.lineTo(this.stage4Btn.position.x, this.stage4Btn.position.y + this.stage4Btn.texture.sizeHeight / 2)
+        ctx.moveTo(this.stage4Btn.position.x + this.stage4Btn.texture.sizeWidth, this.stage4Btn.position.y + this.stage4Btn.texture.sizeHeight / 2)
+        ctx.lineTo(this.stage5Btn.position.x, this.stage5Btn.position.y + this.stage5Btn.texture.sizeHeight / 2)
+        ctx.moveTo(this.stage5Btn.position.x + this.stage5Btn.texture.sizeWidth / 2, this.game.renderStageZone.top)
+        ctx.lineTo(this.stage5Btn.position.x + this.stage5Btn.texture.sizeWidth / 2, this.stage5Btn.position.y)
+        ctx.stroke()
+        ctx.closePath()
     }
 }

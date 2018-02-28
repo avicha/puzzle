@@ -2,6 +2,8 @@ import Texture from '../prime/texture'
 import Sound from '../prime/sound'
 
 export default {
+    game_title: new Texture('res/textures/game_title.png', 1, 1),
+    menu_item_bg: new Texture('res/textures/menu_item_bg.png', 1, 1),
     menu_btn: new Texture('res/textures/menu_btn.png', 1, 1, 60, 60),
     star_full: new Texture('res/textures/star_full.png', 1, 1, 40, 40),
     star_empty: new Texture('res/textures/star_empty.png', 1, 1, 40, 40),
