@@ -14,7 +14,11 @@ export default class StageSelector extends Sprite {
         }
         ctx.textAlign = 'center'
         ctx.textBaseline = 'bottom'
-        ctx.fillStyle = '#8fd5d5'
+        if (this.isSelected) {
+            ctx.fillStyle = '#00838f'
+        } else {
+            ctx.fillStyle = '#8fd5d5'
+        }
         ctx.font = '32px/32px Arial'
         ctx.fillText(this.stage, this.position.x + this.shape.pivot.x, this.position.y + this.shape.bottom - 10)
     }

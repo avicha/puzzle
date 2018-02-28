@@ -29,7 +29,7 @@ export default class StageSelectorScene extends BaseScene {
             let active = Adapter.getStorage(`${sceneData.scene}_active`, true)
             let score = Adapter.getStorage(`${sceneData.scene}_score`, 0)
             let sceneX = scenesContainerOffsetX + sceneIndex * this.scenePerWidth
-            return this.addGameObject(new StageSelector(sceneX, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score, active, ...sceneData }))
+            return this.addGameObject(new StageSelector(sceneX, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score, active, isSelected: sceneData.scene == lastStageScene, ...sceneData }))
         })
         this.title = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 100, 1, { text: stageData.title, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 50, lineHeight: 50, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
         this.desc = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 240, 1, { text: stageData.desc, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 30, lineHeight: 30, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
@@ -89,7 +89,7 @@ export default class StageSelectorScene extends BaseScene {
         let offsetX = this.game.renderStageZone.pivot.x - (this.pageCount + 1) * 100 / 2
         for (let i = 0; i <= this.pageCount; i++) {
             if (i == this.currentPage) {
-                ctx.fillStyle = '#00acc1'
+                ctx.fillStyle = '#00838f'
             } else {
                 ctx.fillStyle = '#f5f5f5'
             }

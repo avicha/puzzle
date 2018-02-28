@@ -19,7 +19,7 @@ import Adapter from 'app/adapter'
 let game = new Engine({ debug: false, stageScaleMode: 'cover', fps: 60, orientation: 'landscape' })
 game.setStageSize(1780, 750)
 Adapter.setStorage('scene1_1_active', true)
-game.launch(StageSelector1)
+game.launch(Menu)
 game.on('switchScene', (sceneName, ...args) => {
     game.pause()
     game._context.fillStyle = '#383838'
