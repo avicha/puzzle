@@ -10,7 +10,7 @@ import resources from '../resources'
 
 export default class StageSelectorScene extends BaseScene {
     static getResources() {
-        return [resources.menu_btn, resources.stage_empty]
+        return [resources.menu_btn, resources.stage_empty, resources.star_empty, resources.star_full]
     }
     constructor(game, stageData) {
         super(game)
@@ -27,9 +27,9 @@ export default class StageSelectorScene extends BaseScene {
         let scenesContainerOffsetX = -this.currentPage * this.game.renderStageZone.width + this.game.renderStageZone.left + (this.scenePerWidth - sceneWidth) / 2
         this.scenes = stageData.scenes.map((sceneData, sceneIndex) => {
             let active = Adapter.getStorage(`${sceneData.scene}_active`, true)
-            let score = Adapter.getStorage(`${sceneData.scene}_score`, 0)
+            let stars = Adapter.getStorage(`${sceneData.scene}_stars`, 0)
             let sceneX = scenesContainerOffsetX + sceneIndex * this.scenePerWidth
-            return this.addGameObject(new StageSelector(sceneX, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), score, active, isSelected: sceneData.scene == lastStageScene, ...sceneData }))
+            return this.addGameObject(new StageSelector(sceneX, this.game.renderStageZone.pivot.y - 20, 1, { shape: new Rectangle(0, 0, 240, 240), stars, active, isSelected: sceneData.scene == lastStageScene, ...sceneData }))
         })
         this.title = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 100, 1, { text: stageData.title, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 50, lineHeight: 50, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
         this.desc = this.addGameObject(new Text(this.game.renderStageZone.pivot.x, this.game.renderStageZone.top + 240, 1, { text: stageData.desc, fontColor: '#f5f5f5', fontWeight: 'normal', fontSize: 30, lineHeight: 30, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP }))
@@ -93,7 +93,7 @@ export default class StageSelectorScene extends BaseScene {
             } else {
                 ctx.fillStyle = '#f5f5f5'
             }
-            ctx.fillRect(offsetX + 100 * i + 10, this.game.renderStageZone.bottom - 80, 80, 10)
+            ctx.fillRect(offsetX + 100 * i + 10, this.game.renderStageZone.bottom - 40, 80, 10)
         }
     }
 }

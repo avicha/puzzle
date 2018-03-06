@@ -17,19 +17,19 @@ export default class Menu extends BaseScene {
         this.puzzle = this.addGameObject(new Sprite(this.game.renderStageZone.pivot.x - resources.game_title.sizeWidth / 2, this.game.renderStageZone.top + 60, 1, { texture: resources.game_title }))
 
         this.stage1Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 3 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
-        this.stage1Text = this.addGameObject(new Button(this.game.renderStageZone.left + 3 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+        this.stage1Text = this.addGameObject(new Button(this.game.renderStageZone.left + 3 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 60, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
 
         this.stage2Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 4.5 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y + 85, 1, { texture: resources.menu_item_bg }))
-        this.stage2Text = this.addGameObject(new Button(this.game.renderStageZone.left + 4.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 145, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+        this.stage2Text = this.addGameObject(new Button(this.game.renderStageZone.left + 4.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 125, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
 
         this.stage3Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 6 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
-        this.stage3Text = this.addGameObject(new Button(this.game.renderStageZone.left + 6 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+        this.stage3Text = this.addGameObject(new Button(this.game.renderStageZone.left + 6 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 60, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
 
         this.stage4Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 7.5 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y + 85, 1, { texture: resources.menu_item_bg }))
-        this.stage4Text = this.addGameObject(new Button(this.game.renderStageZone.left + 7.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 145, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+        this.stage4Text = this.addGameObject(new Button(this.game.renderStageZone.left + 7.5 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y + 125, 2, { text: '修 复', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
 
         this.stage5Btn = this.addGameObject(new Sprite(this.game.renderStageZone.left + 9 * this.game.renderStageZone.width / 12 - resources.menu_item_bg.sizeWidth / 2, this.game.renderStageZone.pivot.y - 100, 1, { texture: resources.menu_item_bg }))
-        this.stage5Text = this.addGameObject(new Button(this.game.renderStageZone.left + 9 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 40, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
+        this.stage5Text = this.addGameObject(new Button(this.game.renderStageZone.left + 9 * this.game.renderStageZone.width / 12, this.game.renderStageZone.pivot.y - 60, 2, { text: '还 原', fontColor: '#ccc', fontSize: 32, align: Text.ALIGN.CENTER, valign: Text.VALIGN.TOP, width: 120, height: 120 }))
         this.on('tap', e => {
             switch (e.target) {
                 case this.stage1Text:

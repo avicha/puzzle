@@ -10,7 +10,7 @@ import TWEEN from '../../../prime/tween'
 import Rectangle from '../../../prime/rectangle'
 import commonUtils from '../../utils/common'
 
-export default class Stage2 extends BaseScene {
+export default class Stage3 extends BaseScene {
     static getResources() {
         return [resources.menu_btn, resources.ink, resources.score_star_empty, resources.score_star_full, resources.footprint]
     }
@@ -208,7 +208,7 @@ export default class Stage2 extends BaseScene {
         this.on('tap', e => {
             switch (e.target) {
                 case this.menuBtn:
-                    this.trigger('switchScene', 'stage2')
+                    this.trigger('switchScene', 'stage3')
                     break
                 case this.passModal.replayBtn:
                     for (let i = 0; i < this.rows; i++) {

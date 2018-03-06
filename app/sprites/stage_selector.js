@@ -21,5 +21,12 @@ export default class StageSelector extends Sprite {
         }
         ctx.font = '32px/32px Arial'
         ctx.fillText(this.stage, this.position.x + this.shape.pivot.x, this.position.y + this.shape.bottom - 10)
+        for (let i = 0; i < 3; i++) {
+            if (i < this.stars) {
+                resources.star_full.drawTile(ctx, this.position.x + i * 60 + 40, this.position.y + this.shape.bottom + 20, 0)
+            } else {
+                resources.star_empty.drawTile(ctx, this.position.x + i * 60 + 40, this.position.y + this.shape.bottom + 20, 0)
+            }
+        }
     }
 }
