@@ -2,7 +2,6 @@ import Engine from 'prime/engine'
 import Menu from 'app/scenes/menu'
 import StageSelector1 from 'app/scenes/stage1/index'
 import StageSelector2 from 'app/scenes/stage2/index'
-import StageSelector3 from 'app/scenes/stage3/index'
 import Scene1_1 from 'app/scenes/stage1/scene1'
 import Scene1_2 from 'app/scenes/stage1/scene2'
 import Scene1_3 from 'app/scenes/stage1/scene3'
@@ -15,13 +14,12 @@ import Scene2_3 from 'app/scenes/stage2/scene3'
 import Scene2_4 from 'app/scenes/stage2/scene4'
 import Scene2_5 from 'app/scenes/stage2/scene5'
 import Scene2_6 from 'app/scenes/stage2/scene6'
-import Scene3_1 from 'app/scenes/stage3/scene1'
 import Adapter from 'app/adapter'
 
 let game = new Engine({ debug: false, stageScaleMode: 'cover', fps: 60, orientation: 'landscape' })
 game.setStageSize(1780, 750)
 Adapter.setStorage('scene1-1_active', true)
-game.launch(Scene3_1)
+game.launch(Menu)
 game.on('switchScene', (sceneName, ...args) => {
     game.pause()
     game._context.fillStyle = '#383838'
@@ -33,8 +31,6 @@ game.on('switchScene', (sceneName, ...args) => {
             return game.launch(StageSelector1, ...args)
         case 'stage2':
             return game.launch(StageSelector2, ...args)
-        case 'stage3':
-            return game.launch(StageSelector3, ...args)
         case 'scene1-1':
             return game.launch(Scene1_1, ...args)
         case 'scene1-2':
@@ -59,8 +55,6 @@ game.on('switchScene', (sceneName, ...args) => {
             return game.launch(Scene2_5, ...args)
         case 'scene2-6':
             return game.launch(Scene2_6, ...args)
-        case 'scene3-1':
-            return game.launch(Scene3_1, ...args)
     }
 })
 game.on('error', ({ message, stack }) => {

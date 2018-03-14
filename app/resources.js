@@ -47,13 +47,5 @@ export default {
     painting_mona_lisa_piece: new Texture('res/textures/stage2/painting_mona_lisa.png', 3, 3, 120, 120),
     painting_cows_thumb: new Texture('res/textures/stage2/painting_cows_thumb.png', 1, 1, 240, 240),
     painting_cows: new Texture('res/textures/stage2/painting_cows.png', 3, 3, 160, 160),
-    painting_cows_piece: new Texture('res/textures/stage2/painting_cows.png', 3, 3, 120, 120),
-    hexagram_thumb: new Texture('res/textures/stage3/hexagram_thumb.png', 1, 1, 240, 240),
-    hexagram: new Texture('res/textures/stage3/hexagram.png', 1, 1),
-    white_triangle1: new Texture('res/textures/stage3/white_triangle1.png', 1, 1, 90, 78),
-    white_triangle2: new Texture('res/textures/stage3/white_triangle2.png', 1, 1, 180, 156),
-    white_triangle3: new Texture('res/textures/stage3/white_triangle3.png', 1, 1, 270, 234),
-    green_triangle1: new Texture('res/textures/stage3/green_triangle1.png', 1, 1, 90, 78),
-    green_triangle2: new Texture('res/textures/stage3/green_triangle2.png', 1, 1, 180, 156),
-    green_triangle3: new Texture('res/textures/stage3/green_triangle3.png', 1, 1, 270, 234),
+    painting_cows_piece: new Texture('res/textures/stage2/painting_cows.png', 3, 3, 120, 120)
 }
